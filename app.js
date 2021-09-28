@@ -92,6 +92,7 @@ const galleryItems = [
     (acc, item) => acc + createGalleryItem(item),
     ""
   );
+  
   refs.gallery.insertAdjacentHTML("afterbegin", galleryMarkup);
   refs.image.classList.add("gallery__image");
   
@@ -101,28 +102,33 @@ const galleryItems = [
   
 
   
-
+    function attribute (e){
+    
+    refs.lightbox__image.src = e.target.getAttribute("data-source");
+    refs.lightbox__image.alt = e.target.alt;
+  }
   function onGalleryClick(e) {
     e.preventDefault();
   
     if (e.target.nodeName === "IMG") {
 
       refs.lightbox.classList.add("is-open");
-      refs.lightbox__image.src = e.target.getAttribute("data-source");
-      refs.lightbox__image.alt = e.target.alt;
+      attribute (e);
+     
     }
     window.addEventListener("keydown", clickKey);
   }
  
 
   function onClickClose(e) {
-      refs.lightbox.classList.remove("is-open");
-      window.removeEventListener("keydown", clickKey);
+  
+    refs.lightbox.classList.remove("is-open");
+    attribute (e);
+    window.removeEventListener("keydown", clickKey);
   }
     
   function closeLightbox(e) {
-   
-    if (e.currentTarget === e.target.getAttribute("data-source"))  {
+       if (e.currentTarget === e.target.getAttribute("data-source"))  {
       onClickClose();
     }
   }
